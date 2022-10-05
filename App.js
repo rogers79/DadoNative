@@ -1,117 +1,101 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+export default function App() {
 
-/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
- * LTI update could not be added via codemod */
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [totUomo, setTotUomo] = useState(0);
+  const [totComputer, setTotComputer] = useState(0);
+  const [vittoria, setVittoria] = useState('In attesa di lancio');
+  const [risUomo, setRisUomo] = useState('nd');
+  const [risComputer, setRisComputer] = useState('nd');
+
+  const random = () =>  {
+    
+    let appo1=(Math.floor(Math.random() * 6+1));
+    console.log("uomo"+appo1);
+    
+    let appo2=(Math.floor(Math.random() * 6+1));
+    console.log("computer"+appo2);
+
+    if (appo1 < appo2) {
+      
+      setVittoria('Ha vinto il Computer')
+      setRisUomo(appo1);
+      setRisComputer(appo2);
+      setTotComputer(totComputer+1);
+      let appo3= risUomo;
+      console.log('uomoappo', appo3);
+
+
+      console.log("stato uomo"+risUomo);
+      console.log("stato computer"+risComputer);
+      console.log(vittoria);
+
+    } else if (appo1 > appo2) {
+      
+        
+      setVittoria("Ha vinto l'uomo");
+      setRisUomo(appo1);
+      setRisComputer(appo2);
+      setTotUomo(totUomo+1);
+      let appo3= risUomo;
+      console.log('uomoappo', appo3);
+
+
+      console.log("stato uomo"+risUomo);
+      console.log("stato computer"+risComputer);
+      console.log(vittoria);
+
+    } else if (appo1 === appo2) {
+      setVittoria("Parità")
+      setRisUomo(appo1);
+      setRisComputer(appo2);
+      let appo3= risUomo;
+      console.log('uomoappo', appo3);
+      console.log("stato uomo"+risUomo);
+      console.log("stato computer"+risComputer);
+      console.log(vittoria);
+    }
+  }
+
+
+
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={styles.container}>
+      <Text>Dado</Text>
+      <View style={styles.lancioContainer}>
+        <Text style={styles.text}>Dado Uomo: {risUomo}</Text>
+        <Text style={styles.text}>Dado Computer: {risComputer}</Text>
+      </View>
+      <Button title="Lancia Dado" onPress={random}/>
+      <Text>{vittoria}</Text>
+      <View style={styles.totaleContainer}>
+        <Text style={styles.text}>Totale uomo: {totUomo}</Text>
+        <Text style={styles.text}>Totale computer: {totComputer}</Text>
+      </View>
     </View>
   );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+}
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    //justifyContent: 'center',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  totaleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  lancioContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  highlight: {
-    fontWeight: '700',
-  },
+  text: {
+    padding: 30
+  }
 });
-
-export default App;
